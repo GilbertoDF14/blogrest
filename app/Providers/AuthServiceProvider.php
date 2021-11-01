@@ -38,7 +38,9 @@ class AuthServiceProvider extends ServiceProvider
             }
             if ($token) {
                 if(JWT::verify($token, env('JWT_SECRET', 'kZ2zswvPw5GWiu19ff6oMfITucxCGoko'))==0){
-                    return JWT::get_data($token, env('JWT_SECRET', 'kZ2zswvPw5GWiu19ff6oMfITucxCGoko'));
+                    $data= JWT::get_data($token, env('JWT_SECRET', 'kZ2zswvPw5GWiu19ff6oMfITucxCGoko'));
+                    return User::find($data['user']);
+                    //return JWT::get_data($token, env('JWT_SECRET', 'kZ2zswvPw5GWiu19ff6oMfITucxCGoko'));
                 }
             }
         });

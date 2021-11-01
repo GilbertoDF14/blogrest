@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\JWT;
 
 class AuthController extends Controller
 {
-    public function login(Request $req){
-        $this->validate($req,[
-            'user'=>'required',
-            'pass'=>'required']);
-        $result = User::find($req->input('user'));
+    public function login($user,$pass){
+        //$this->validate($req,[
+        //    'user'=>'required',
+        //    'pass'=>'required']);
+        $result = User::find($user);
         if($result){
-            if(Hash::check($req->input('pass'), $result->pass)){
+            if(Hash::check($pass, $result->pass)){
                 return response()->json([
                     'auth' => true,
                     'user' => $result,
